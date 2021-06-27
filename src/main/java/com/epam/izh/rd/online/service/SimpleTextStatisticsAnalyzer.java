@@ -4,8 +4,6 @@ import com.epam.izh.rd.online.helper.Direction;
 
 import java.util.*;
 
-import static java.util.Collections.*;
-
 /**
  * Совет:
  * Начните с реализации метода {@link SimpleTextStatisticsAnalyzer#getWords(String)}.
@@ -23,7 +21,8 @@ public class SimpleTextStatisticsAnalyzer implements TextStatisticsAnalyzer {
      */
     @Override
     public int countSumLengthOfWords(String text) {
-        return 0;
+        String result = text.replaceAll("[^A-Za-zА-Яа-я0-9]", "");
+        return result.length();
     }
 
     /**
@@ -34,7 +33,16 @@ public class SimpleTextStatisticsAnalyzer implements TextStatisticsAnalyzer {
      */
     @Override
     public int countNumberOfWords(String text) {
-        return 0;
+        int count = 0;
+        String result = text.replaceAll("[^A-Za-zА-Яа-я0-9]", " ");
+        String[] strings = result.split(" ");
+        for (String string : strings) {
+            if (!string.equals("")) {
+                count++;
+            }
+        }
+
+        return count;
     }
 
     /**
@@ -44,7 +52,12 @@ public class SimpleTextStatisticsAnalyzer implements TextStatisticsAnalyzer {
      */
     @Override
     public int countNumberOfUniqueWords(String text) {
-        return 0;
+        String result = text.replaceAll("[^A-Za-zА-Яа-я0-9]", " ");
+        String[] strings = result.split(" ");
+        List<String> a = Arrays.asList(strings);
+        Set<String> set = new HashSet<>(a);
+        set.remove("");
+        return set.size();
     }
 
     /**
@@ -57,7 +70,16 @@ public class SimpleTextStatisticsAnalyzer implements TextStatisticsAnalyzer {
      */
     @Override
     public List<String> getWords(String text) {
-        return emptyList();
+        String result = text.replaceAll("[^A-Za-zА-Яа-я0-9]", " ");
+        String[] strings = result.split(" ");
+        ArrayList<String> arrayList = new ArrayList<String>();
+        for (String string : strings) {
+            if (!string.equals("")) {
+                arrayList.add(string);
+            }
+        }
+
+        return arrayList;
     }
 
     /**
@@ -70,7 +92,13 @@ public class SimpleTextStatisticsAnalyzer implements TextStatisticsAnalyzer {
      */
     @Override
     public Set<String> getUniqueWords(String text) {
-        return emptySet();
+
+        String result = text.replaceAll("[^A-Za-zА-Яа-я0-9]", " ");
+        String[] strings = result.split(" ");
+        List<String> a = Arrays.asList(strings);
+        Set<String> set = new HashSet<>(a);
+        set.remove("");
+        return set;
     }
 
     /**
@@ -82,7 +110,20 @@ public class SimpleTextStatisticsAnalyzer implements TextStatisticsAnalyzer {
      */
     @Override
     public Map<String, Integer> countNumberOfWordsRepetitions(String text) {
-        return emptyMap();
+        String result = text.replaceAll("[^A-Za-zА-Яа-я0-9]", " ");
+        String[] strings = result.split(" ");
+        Map<String, Integer> map = new HashMap<>();
+        for (String word : strings) {
+            if (word.equals("")) {
+                continue;
+            }
+            if (map.containsKey(word)) {
+                map.put(word, map.get(word) + 1);
+            } else {
+                map.put(word, 1);
+            }
+        }
+        return map;
     }
 
     /**
@@ -95,6 +136,26 @@ public class SimpleTextStatisticsAnalyzer implements TextStatisticsAnalyzer {
      */
     @Override
     public List<String> sortWordsByLength(String text, Direction direction) {
-        return emptyList();
+        String result = text.replaceAll("[^A-Za-zА-Яа-я0-9]", " ");
+        String[] strings = result.split(" ");
+        ArrayList<String> list = new ArrayList<>();
+        for (String string : strings) {
+            if (!string.equals("")) {
+                list.add(string);
+            }
+
+        }
+        switch (direction) {
+            case ASC:
+                list.sort((o1, o2) -> Integer.compare(o1.length(), o2.length()));
+                break;
+
+            case DESC:
+                list.sort((o1, o2) -> Integer.compare(o2.length(), o1.length()));
+                break;
+        }
+
+        return list;
     }
+
 }
